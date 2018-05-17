@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+    <title>Words</title>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <style>
+   	h1{
+   		position: relative;
+   		font-size: 75px;
+     	text-align: center;
+     	text-indent: 120pt;
+
+    }
+    body{
+    	 background: url("http://blog.visme.co/wp-content/uploads/2017/07/50-Beautiful-and-Minimalist-Presentation-Backgrounds-040.jpg") no-repeat center center fixed; 
+  		-webkit-background-size: cover;
+  		-moz-background-size: cover;
+  		-o-background-size: cover;
+  		background-size: cover;
+    }
+    p{
+    	text-align:center; 
+  		vertical-align: middle;
+  		margin-left: 300px;
+		line-height: 40px;
+    }
+    .heightText{
+    	position: relative;
+ 		float:left;
+ 		height:37px;
+ 		width:140px;
+    	margin-left: 400px;
+    	left: 50%;
+    	right: 50%;
+ 		}
+ 	.center{
+ 				position: relative;
+ 		        width: 320px;
+    			top:  33%;
+    			border: 5px 400px; 
+ 	}
+ 	.center1{
+ 		 position: relative;
+ 		 display: block;
+   		 margin-left: auto;
+    	 margin-right: auto;
+  	     margin-bottom: auto;
+ 	}
+ 	button{
+
+ 		float: left;
+    	position: relative;
+    	margin-left: 400px;
+    	left: 50%;
+    	right: 50;
+ 	}
+   
+   </style>
+</head>
+<body>
+	<h1 style="color:red">Hayden's Palidrome Machine</h1>
+	<img src="http://cf.ydcdn.net/latest/images/wordfinder-background.jpg"  width="300" height="150" class="center1">
+
+	<div class="center" id="textbox">
+		<input class="heightText" type="text" id="name1" name ="Search">
+		<button>Click</button>
+
+	<div></div>
+
+	<p id = "results" style="color:red">Waiting for word to be entered</p>
+	<p id = "id1" style="color:red">  </p>
+	<p id = "id2" style="color:red">  </p>
+
+	
+    <!-- HTML goes here to accept input word and display results from the 3 AJAX calls to http://localhost:4444 -->
+</body>
+<script>
+	var word = $("#name1").val();
+		$(document).ready(function(){
+			$("button").click(function(){
+				
+				$.get("http://localhost:4444/palindrome?word=" + $("#name1").val(), function(data){
+				if(data == "yes"){
+					$("#id1").html("The word is a palindrome");
+				}
+				if(data == "no"){
+					$("#id1").html("The word is not a palindrome");
+				}
+				
+			});
+
+				$.get("http://localhost:4444/duplicates?word=" + $("#name1").val(), function(data){
+				if(data == "yes"){
+					$("#id2").html("The word contains duplicates");
+				}
+				if(data == "no"){
+					$("#id2").html("The word contains no duplicates");
+				}
+			});
+				$.get("http://localhost:4444/reverse?word=" + $("#name1").val(), function(data){
+				$("#results").html("The word reversed is " + data);
+			});
+		});
+	});
+        	//http: localhost:4444/palindrome?word=someword
+      		 //http:localhost:4444/duplicates?word= + wordData
+      		// http: localhost:4444/reverse?word= + wordData
+      
+     
+    </script>
+</html>
